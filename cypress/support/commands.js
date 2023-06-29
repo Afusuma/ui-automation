@@ -33,3 +33,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 Cypress.Commands.add("innerText", { prevSubject: true}, (subject, options) => {
   return subject.innerText();
 });
+
+Cypress.Commands.add('mainUrl', () => {
+  cy.origin('https://www.bbc.com', () => {
+})
+})

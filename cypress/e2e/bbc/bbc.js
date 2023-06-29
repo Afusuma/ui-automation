@@ -1,5 +1,4 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
-import { values } from "lodash";
 
 beforeEach(() => {
   cy.visit('/')
@@ -7,8 +6,7 @@ beforeEach(() => {
 })
 
 Given("I am on empty home page", () => {
-    cy.origin('https://www.bbc.com', () => {
-})
+    cy.mainUrl();
 });
 
 When("display the name of all today's teams", () => {
@@ -26,5 +24,33 @@ Then("I validate if it is bringing a name or not", () => {
       console.log(getText)
   } else {
     console.log('Not found')
-  }                
+  } 
+});
+
+
+When("I search for articles about sport", () => {
+  const searchTerm = 'sports';
+  cy.visit('https://www.bbc.co.uk/search?d=SEARCH_PS');
+
+  cy.get('#search-input')
+    .type(searchTerm)
+    .type('{enter}');
+
+  cy.wait(2000); 
+});
+
+Then("I can print the first and last article on the page", () => {
+  cy.get('p[class="ssrcss-6arcww-PromoHeadline e1f5wbog6"]')
+    .first()
+    .invoke('text')
+    .then((firstHeading) => {
+      console.log('First Heading:', firstHeading);
+    });
+
+    cy.get('p[class="ssrcss-6arcww-PromoHeadline e1f5wbog6"]')
+    .last()
+    .invoke('text')
+    .then((lastHeading) => {
+      console.log('Last Heading:', lastHeading);
+    });
 });
