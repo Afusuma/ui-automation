@@ -37,7 +37,6 @@ When("I search for articles about sport", () => {
   cy.get('#search-input')
     .type(searchTerm)
     .type('{enter}');
-
   cy.wait(2000); 
 });
 
